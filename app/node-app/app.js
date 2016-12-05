@@ -4,6 +4,9 @@ var userEventHandler = require('./user-event-handler');
 
 var app = express();
 
+// counter middleware
+var counter = require('./middleware/counter/counter.js');
+
 var allowCORS = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
@@ -15,6 +18,7 @@ var allowCORS = function(req, res, next) {
 
 app.use(allowCORS);
 app.use(bodyParser.json()); // for parsing application/json
+app.use(counter);
 
 /*
 req.body = {
