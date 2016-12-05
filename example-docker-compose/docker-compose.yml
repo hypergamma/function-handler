@@ -1,0 +1,17 @@
+version: '2'
+services:
+  gamma-app:
+    build: ../app
+    command: node /code/app.js
+    ports: 
+      - "8080:8080"
+    depends_on:
+      - node
+
+  node:
+    image: node:7.2
+    depends_on:
+      - ubuntu
+
+  ubuntu:
+    image: ubuntu 
