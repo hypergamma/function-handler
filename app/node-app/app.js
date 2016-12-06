@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var userEventHandler = require('./user-event-handler');
 
+var port = process.env.PORT || 8080;
 var app = express();
 
 // counter middleware
@@ -42,4 +43,4 @@ app.post('/', function(req, res){
 
 });
 
-app.listen(8000);
+app.listen(port);
