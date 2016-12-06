@@ -6,7 +6,8 @@ var port = process.env.PORT || 8080;
 var app = express();
 
 // counter middleware
-var counter = require('./middleware/counter/counter.js');
+var invocation = require('./middleware/counter/invocation.js');
+var latency = require('./middleware/counter/latency.js');
 
 var allowCORS = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -19,7 +20,8 @@ var allowCORS = function(req, res, next) {
 
 app.use(allowCORS);
 app.use(bodyParser.json()); // for parsing application/json
-app.use(counter);
+app.use(invocation);
+app.use(latency);
 
 /*
 req.body = {
