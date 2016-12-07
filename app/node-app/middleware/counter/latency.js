@@ -4,6 +4,10 @@ const os = require('os');
 const influx = require('./influx.js');
 var onHeaders = require('on-headers');
 
+var nfunc = process.env.FUNC_NAME;
+var nuser = process.env.USER_NAME;
+var host = os.hostname();
+
 /**
  * Function Latency Counter:
  *
@@ -12,8 +16,7 @@ var onHeaders = require('on-headers');
 
 var latency = function (req, res, next) {
 
-    var funcname = req.body.params.name;
-    var startAt = process.hrtime()
+    var startAt = process.hrtime();
 
     onHeaders(res, function onHeaders() {
         var diff = process.hrtime(startAt);
@@ -22,7 +25,7 @@ var latency = function (req, res, next) {
         influx.writePoints([
             {
                 measurement: 'handler',
-                tags: { host: os.hostname(), funcname: funcname },
+                tags: { host: host, nfunc: nfunc, nuser: nuser },
                 fields: { latency: timetaken },
             }
         ]).catch(function(err) {

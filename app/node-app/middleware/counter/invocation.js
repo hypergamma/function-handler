@@ -1,6 +1,9 @@
 const os = require('os');
 const influx = require('./influx.js');
 
+var nfunc = process.env.FUNC_NAME;
+var nuser = process.env.USER_NAME;
+var host = os.hostname();
 /**
  * Function Invocation Counter:
  *
@@ -8,13 +11,10 @@ const influx = require('./influx.js');
  */
 var invocation = function (req, res, next) {
 
-    // TODO: handler의 func name 파라미터를 확정할 것
-    var funcname = req.body.params.name;
-
     influx.writePoints([
         {
             measurement: 'handler',
-            tags: { host: os.hostname(), funcname: funcname },
+            tags: { host: host, nfunc: nfunc, nuser: nuser },
             fields: { num_invokes: 1 },
         }
     ]).catch(function(err) {
