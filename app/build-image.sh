@@ -18,12 +18,12 @@ IMAGE_NAME="event-handler-"$env":"$env_ver
 
 
 
-if [[ $PRODUCTION_GAMMA = "production" ]];
-then
+#if [[ $PRODUCTION_GAMMA = "production" ]];
+#then
     REGISTRY="52.187.69.164:5000"
-else
-    REGISTRY="0.0.0.0:5000"
-fi
+#else
+#    REGISTRY="0.0.0.0:5000"
+#fi
 
 ## change base
 sed "s/{{env}}/${env}/" $dockerfile_root/Dockerfile > $dockerfile_root/Dockerfile.1
