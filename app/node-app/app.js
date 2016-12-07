@@ -1,11 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-//var userEventHandler = require('./user-event-handler');
+var userEventHandler = require('./user-event-handler');
 
 // counter middleware
 var invocation = require('./middleware/counter/invocation.js');
 var latency = require('./middleware/counter/latency.js');
 var resource = require('./middleware/counter/resource.js');
+var error = require('./middleware/counter/error.js');
 
 var schedule = require('node-schedule');
 
@@ -56,8 +57,9 @@ app.post('/', function(req, res){
         }
     };
 
-//    userEventHandler.handler(params, callback);
+    userEventHandler.handler(params, callback);
 
 });
 
+app.use(error);
 app.listen(port);
