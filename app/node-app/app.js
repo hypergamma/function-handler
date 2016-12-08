@@ -10,16 +10,6 @@ var error = require('./middleware/counter/error.js');
 
 var schedule = require('node-schedule');
 
-// Resource monitor
-// ----------------------------------------------------------------------------------------------------
-// scheduling rules
-var rule = new schedule.RecurrenceRule();
-rule.second = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-
-schedule.scheduleJob('monitor', rule, () => {
-    resource.getResourceUsage();
-});
-
 // Handler main
 // ----------------------------------------------------------------------------------------------------
 var port = 3000;
@@ -58,8 +48,18 @@ app.post('/', function(req, res){
     };
 
     userEventHandler.handler(params, callback);
-
+    resource.getResourceUsage();
 });
 
 app.use(error);
 app.listen(port);
+
+// Resource monitor
+// ----------------------------------------------------------------------------------------------------
+// scheduling rules
+// var rule = new schedule.RecurrenceRule();
+// rule.second = [0, 10, 20,30, 40, 50];
+// schedule.scheduleJob('monitor', rule, () => {
+//     resource.getResourceUsage();
+// });
+
